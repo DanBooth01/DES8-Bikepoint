@@ -14,7 +14,16 @@ s3_client = boto3.client(
     aws_secret_access_key = AWS_SECRET_ACCESS_KEY
 )
 
-file_to_upload = 'data/2026-09-28 11-06-14.json'
-filename_s3 = '2026-09-28 11-06-14.json'
 
-s3_client.upload_file(file_to_upload, AWS_BUCKET_NAME, filename_s3)
+files_to_upload = os.listdir('data')
+
+for file in files_to_upload:
+    file_to_upload = f'data/{file}'
+    filename_s3 = file
+    try:
+        s3_client.upload_file(file_to_upload, AWS_BUCKET_NAME, filename_s3)
+        print(f'{file} uploaded successfully')
+        os.remove(file_to_upload)
+    except Exception as e:
+        print(f'An error has occured: {e}')
+
