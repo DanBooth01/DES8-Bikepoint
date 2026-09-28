@@ -14,7 +14,7 @@ data_dir = 'data'
 os.makedirs(data_dir, exist_ok=True)
 
 ## Create a timestamp
-timestamp = datetime.now().strftime("%Y-%m-%d %H-%M-&S")
+timestamp = datetime.now().strftime("%Y-%m-%d %H-%M-%S")
 filename = f"{data_dir}/{timestamp}.json"
 
 ## Create folder
