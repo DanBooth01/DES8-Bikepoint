@@ -1,6 +1,11 @@
 from modules.log_initialise import setup_logging
 from datetime import datetime
 from modules.run_extract import extract_json
+from modules.load_data import s3_upload
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 timestamp = datetime.now().strftime("%Y-%m-%d %H-%M-%S")
 
@@ -17,3 +22,11 @@ max_retry = 5
 delay = 10
 
 extract_json(url, data_dir, timestamp, max_retry, delay)
+
+
+AWS_ACCESS_KEY = os.getenv('AWS_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_BUCKET_NAME = os.getenv('AWS_BUCKET_NAME')
+
+
+s3_upload(data_dir, AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, AWS_BUCKET_NAME)
