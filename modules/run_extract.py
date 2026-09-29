@@ -1,17 +1,27 @@
 import requests
 import time
 import json
+import logging
+import os
 
-def run_extract(url, filename, logger):
+logger = logging.getLogger(__name__)
 
-    ## Set up a rety setting in case API fails
+def extract_json(url, data_dir, timestamp, max_retry, delay):
+    """Extracts JSON from specified URL
 
-    max_retry = 5
-    attempt = 0
-    delay = 10
-
-
+    Args:
+        url (_type_): The url you want to download
+        data_dir (_type_): Where to save the data
+        timestamp (_type_): The filename will be this
+        max_retry (_type_): The number of time to retry the API
+        delay (_type_): _description_
+    """
     ## Keep trying until the max number of attempts is reached
+
+    os.makedirs(data_dir, exist_ok=True)
+    filename = f"{data_dir}/{timestamp}.json"
+
+    attempt = 0
 
     while attempt < max_retry:
 
