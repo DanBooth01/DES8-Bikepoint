@@ -39,7 +39,6 @@ s3_client = boto3.client(
     aws_secret_access_key = AWS_SECRET_ACCESS_KEY
 )
 
-
 files_to_upload = os.listdir('data')
 
 for file in files_to_upload:
