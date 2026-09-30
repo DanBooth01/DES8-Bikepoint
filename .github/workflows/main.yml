@@ -1,0 +1,30 @@
+name: Bike Point Ingestion
+
+on:
+  schedule:
+    - cron:  '0 * * * *'
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    runs-on: windows-latest
+    environment: des8-bikepoint-db-environment
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v7
+
+      - name: Setup virtual environment
+        uses: actions/setup-python@v7
+        with:
+          python-version: 3.12
+
+      - name: Install Packages
+        run: pip install -r requirments.txt
+
+      - name: Run python
+        env:
+          AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
+          AWS_SECTRET_ACCESS_KEY: ${{secrets.AWS_SECRET__ACCESS_KEY}}
+          AWS_BUCKET_NAME: ${{secrets.AWS_BUCKET_NAME}}
+        run: python.Main.py
